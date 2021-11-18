@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - 12
+
+env: 
+  - 'DATABASE_URL=postgresql://postgres@localhost:5432/the_fruit_basket_test'
+
+before_script:
+  - npm install
+  - psql -c 'create database  the_fruit_basket_test;' -U postgres
+  - psql -U postgres -d the_fruit_basket_test -a -f create-table.sql
+
+services:
+  - postgresql
+addons:
+  postgresql: '9.4'
+  apt:
+    packages:
+      - postgresql-server-dev-9.4
